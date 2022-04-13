@@ -2,27 +2,7 @@
 <html lang="en">
 
   <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>BlackBoard</title>
-
-    <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
+    <% include ./header.ejs %>
   </head>
 
   <body id="page-top">
@@ -62,39 +42,7 @@
 
     <div id="wrapper">
 
-      <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/users-page">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Clients</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/catalog-page">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Catalogue Produits</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/orders-list-page">
-            <i class="fas fa-shopping-basket"></i>
-            <span>Commandes</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/charts">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
-        </li>
-      </ul>
+      <%- include('sidebar') %>
 
       <div id="content-wrapper">
 
@@ -109,36 +57,18 @@
               </tr>
             </thead>
             <tbody>
+              <% for(let i=0; i<messageList.messages.length; i++){ %>
               <tr>
-                <td><i class="fas fa-envelope"></i></td>
-                <td>Question sur les delais de livraison ...</td>
-                <td>john@gmail.com</td>
-                <td>20/01/19</td>
-              </tr>
-              <tr>
-                <td><i class="fas fa-envelope"></i></td>
-                <td>Question sur la trotinette M365</td>
-                <td>matt@gmail.com</td>
-                <td>18/01/19</td>
-              </tr>
-              <tr>
+                <% if(messageList.messages[i].read == true){ %>
                 <td><i class="far fa-envelope-open"></i></td>
-                <td>Avez vous le modèle Dualtron Thunder ?</td>
-                <td>jerome@gmail.com</td>
-                <td>06/01/19</td>
+                <% } else { %>
+                  <td><i class="far fa-envelope"></i></td>
+                  <% } %>
+                <td><%= messageList.messages[i].title %></td>
+                <td><%= messageList.messages[i].sender %></td>
+                <td><%= messageList.messages[i].dateExp.toLocaleDateString("fr-FR") %></td>
               </tr>
-              <tr>
-                <td><i class="far fa-envelope-open"></i></td>
-                <td>Livraison avant Noël ?</td>
-                <td>zoe@hotmail.com</td>
-                <td>20/12/18</td>
-              </tr>
-              <tr>
-                <td><i class="far fa-envelope-open"></i></td>
-                <td>Problème de batterie sur ma trottinette</td>
-                <td>jeff@hotmail.com</td>
-                <td>18/01/19</td>
-              </tr>
+              <% } %>
             </tbody>
           </table>
 

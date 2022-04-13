@@ -2,26 +2,33 @@ var express = require('express');
 var router = express.Router();
 var articleModel = require('../models/articles');
 var orderModel = require('../models/order')
+var userModel = require('../models/users')
+
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
+router.get('/', async function(req, res, next) {
+  stockCheck = await articleModel.find({stock: {$lt : 1 }});
+  checker = await userModel.findById("5c52e4efaa4beef85aad5e52");
+  res.render('index', {stockCheck, checker});
 });
 
 /* GET tasks page. */
-router.get('/tasks-page', function(req, res, next) {
-  res.render('tasks');
+router.get('/tasks-page', async function(req, res, next) {
+  taskList = await userModel.findById("5c52e4efaa4beef85aad5e52");
+  res.render('tasks', {taskList : taskList});
 });
 
 /* GET Messages page. */
-router.get('/messages-page', function(req, res, next) {
-  res.render('messages');
+router.get('/messages-page', async function(req, res, next) {
+  messageList = await userModel.findById("5c52e4efaa4beef85aad5e52");
+  res.render('messages', {messageList : messageList});
 });
 
 /* GET Users page. */
-router.get('/users-page', function(req, res, next) {
-  res.render('users');
+router.get('/users-page', async function(req, res, next) {
+  userList = await userModel.find();
+  res.render('users', {userList : userList});
 });
 
 /* GET Catalog page. */
@@ -44,7 +51,7 @@ router.get('/order-page', async function(req, res, next) {
 });
 
 /* GET chart page. */
-router.get('/charts', function(req, res, next) {
+router.get('/charts', async function(req, res, next) {
   res.render('charts');
 });
 
